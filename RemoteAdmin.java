@@ -18,4 +18,12 @@ public interface RemoteAdmin extends Remote {
      * @throws RemoteException if a remote communication error occurs.
      */
     String getAuctionStatus() throws RemoteException;
+
+    /**
+     * Starts the auction with a specified duration.
+     * @param durationSeconds The duration of the auction in seconds.
+     * @return A confirmation message.
+     * @throws RemoteException if a remote communication error occurs.
+     */
+    String startAuction(int durationSeconds) throws RemoteException;
 }

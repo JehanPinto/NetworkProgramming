@@ -7,19 +7,133 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Login Screen -->
+    <div id="login-screen" class="container">
         <header>
-            <h1>Auction House</h1>
-            <p id="status">Connecting...</p>
+            <h1>🏛️ Auction House</h1>
+            <p>Select your role to continue</p>
         </header>
-        <div id="chat-box">
-            <!-- Bid history will be appended here -->
+        <div class="login-content">
+            <div class="role-selection">
+                <button id="admin-role-btn" class="role-btn">
+                    <span class="role-icon">👨‍💼</span>
+                    <span class="role-text">Admin</span>
+                </button>
+                <button id="user-role-btn" class="role-btn">
+                    <span class="role-icon">👤</span>
+                    <span class="role-text">Bidder</span>
+                </button>
+            </div>
+            
+            <!-- Admin Login Form (hidden by default) -->
+            <div id="admin-login-form" class="hidden">
+                <h2>Admin Login</h2>
+                <form id="admin-credentials-form">
+                    <input type="text" id="admin-username" placeholder="Username" autocomplete="off" required>
+                    <input type="password" id="admin-password" placeholder="Password" required>
+                    <div id="login-error" class="error-message hidden">Invalid credentials</div>
+                    <button type="submit">Login</button>
+                    <button type="button" id="back-to-roles">Back</button>
+                </form>
+            </div>
         </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="container hidden">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <p id="admin-status">Connected</p>
+        </header>
+        <div class="admin-content">
+            <!-- Auction Control Panel -->
+            <div class="control-panel">
+                <h2>Auction Control</h2>
+                <div class="timer-setup">
+                    <label for="starting-price">Starting Price ($):</label>
+                    <input type="number" id="starting-price" value="50.00" min="1" step="0.01">
+                    <label for="auction-duration">Duration (seconds):</label>
+                    <input type="number" id="auction-duration" value="60" min="10" max="600">
+                    <button id="start-auction-btn">Start Auction</button>
+                </div>
+                <div id="auction-timer" class="timer hidden">
+                    <span class="timer-label">Time Remaining:</span>
+                    <span id="timer-display" class="timer-value">--:--</span>
+                </div>
+            </div>
+
+            <!-- Bid Details -->
+            <div class="bid-details">
+                <h2>Current Auction Status</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="status-label">Item:</span>
+                        <span id="admin-item-name" class="status-value">Vintage Painting</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Current Price:</span>
+                        <span id="admin-current-price" class="status-value">$50.00</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Highest Bidder:</span>
+                        <span id="admin-highest-bidder" class="status-value">No one</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bid History -->
+            <div class="bid-history">
+                <h2>Bid History</h2>
+                <div id="admin-bid-list">
+                    <p class="no-bids">Waiting for auction to start...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Interface -->
+    <div id="user-interface" class="container hidden">
+        <header>
+            <h1>🏛️ Auction House</h1>
+            <div class="user-info">
+                <span id="user-number" class="user-badge">User-0</span>
+                <span id="connection-status">Connecting...</span>
+            </div>
+        </header>
+        
+        <div class="auction-info">
+            <div class="info-card">
+                <div class="info-label">Item</div>
+                <div id="item-name" class="info-value">Vintage Painting</div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">Current Price</div>
+                <div id="current-price" class="info-value">$50.00</div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">Highest Bidder</div>
+                <div id="highest-bidder" class="info-value">No one</div>
+            </div>
+            <div class="info-card timer-card">
+                <div class="info-label">Time Remaining</div>
+                <div id="time-remaining" class="info-value timer-value">Waiting to start...</div>
+            </div>
+        </div>
+
+        <div id="bid-history">
+            <h3>Bid History</h3>
+            <div id="bid-list">
+                <!-- Bid history will be appended here -->
+            </div>
+        </div>
+
         <form id="bid-form">
-            <input type="text" id="bid-input" placeholder="Enter your bid" autocomplete="off" required>
-            <button type="submit">Place Bid</button>
+            <input type="number" id="bid-input" placeholder="Enter your bid amount" 
+                   autocomplete="off" required step="0.01" min="0">
+            <button type="submit" id="bid-submit-btn" disabled>Place Bid</button>
         </form>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

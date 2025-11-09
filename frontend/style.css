@@ -1,10 +1,14 @@
 :root {
-    --background-color: #1a1a1a;
+    --background-color: #0f0f23;
     --text-color: #e0e0e0;
-    --primary-color: #007bff;
-    --container-bg: #2c2c2c;
-    --input-bg: #3a3a3a;
-    --border-color: #444;
+    --primary-color: #00d4ff;
+    --secondary-color: #ff6b6b;
+    --success-color: #51cf66;
+    --warning-color: #ffd43b;
+    --container-bg: #1a1a2e;
+    --input-bg: #16213e;
+    --border-color: #2e3a52;
+    --card-bg: #0f3460;
 }
 
 * {
@@ -15,80 +19,434 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--background-color);
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
     color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 1rem;
 }
 
 .container {
     width: 100%;
-    max-width: 800px;
-    height: 95vh;
+    max-width: 900px;
     background-color: var(--container-bg);
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     overflow: hidden;
 }
 
+.hidden {
+    display: none !important;
+}
+
+/* ========== HEADER ========== */
 header {
+    padding: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    text-align: center;
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--container-bg) 100%);
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ========== LOGIN SCREEN ========== */
+.login-content {
+    padding: 2rem;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.role-selection {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.role-btn {
+    width: 200px;
+    height: 200px;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.role-btn:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+}
+
+.role-icon {
+    font-size: 4rem;
+}
+
+#admin-login-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#admin-login-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+#admin-login-form input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+#admin-login-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+#admin-login-form button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), #0099cc);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#admin-login-form button:hover {
+    transform: scale(1.02);
+}
+
+#admin-login-form button[type="button"] {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+}
+
+.error-message {
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: rgba(255, 107, 107, 0.1);
+    border-radius: 8px;
+}
+
+/* ========== ADMIN DASHBOARD ========== */
+.admin-content {
+    padding: 1.5rem;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.control-panel {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.control-panel h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.timer-setup {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.timer-setup label {
+    font-weight: 600;
+    text-align: right;
+}
+
+.timer-setup input {
+    padding: 0.5rem;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    max-width: 150px;
+}
+
+.timer-setup button {
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
+.timer-setup button,
+#start-auction-btn {
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, var(--success-color), #37b24d);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.timer-setup button:hover {
+    transform: scale(1.05);
+}
+
+.timer-setup button:disabled {
+    background: var(--border-color);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.timer {
+    margin-top: 1rem;
     padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    border-radius: 8px;
     text-align: center;
 }
 
-#status {
+.timer-label {
     font-size: 0.9rem;
     color: #aaa;
 }
 
-#chat-box {
-    flex-grow: 1;
-    padding: 1rem;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column-reverse; /* Newest messages at the bottom */
+.timer-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--warning-color);
+    margin-left: 1rem;
 }
 
-.message {
-    margin-bottom: 0.75rem;
-    padding: 0.5rem 1rem;
+.bid-details,
+.bid-history {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
     border-radius: 12px;
-    max-width: 80%;
-    word-wrap: break-word;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
 }
 
-.server-message {
-    background-color: #4a4a4a;
-    align-self: flex-start;
+.bid-details h2,
+.bid-history h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
 }
 
-.bid-message {
-    background-color: var(--primary-color);
-    color: white;
-    align-self: flex-end;
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.status-item {
+    background-color: var(--input-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.status-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-bottom: 0.5rem;
+}
+
+.status-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* ========== USER INTERFACE ========== */
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.user-badge {
+    background: linear-gradient(135deg, var(--primary-color), #0099cc);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+#connection-status {
+    font-size: 0.9rem;
+}
+
+.auction-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.info-card {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+}
+
+.timer-card {
+    border-color: var(--warning-color);
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-bottom: 0.5rem;
+}
+
+.info-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.timer-value {
+    color: var(--warning-color);
+}
+
+#bid-history {
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#bid-history h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+#bid-list,
+#admin-bid-list {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.bid-item {
+    background-color: var(--card-bg);
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 3px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.bid-item:hover {
+    border-left-color: var(--primary-color);
+}
+
+.bid-item.own-bid {
+    border-left-color: var(--success-color);
+    background-color: rgba(81, 207, 102, 0.1);
+}
+
+.bid-user {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.bid-amount {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.bid-time {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.system-message {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.system-message.info {
+    background-color: rgba(0, 212, 255, 0.1);
+    color: var(--primary-color);
+}
+
+.system-message.error {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: var(--secondary-color);
+}
+
+.no-bids {
+    text-align: center;
+    color: #888;
+    padding: 2rem;
 }
 
 #bid-form {
     display: flex;
-    padding: 1rem;
-    border-top: 1px solid var(--border-color);
-    background-color: var(--container-bg);
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 2px solid var(--border-color);
 }
 
 #bid-input {
     flex-grow: 1;
-    padding: 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
     background-color: var(--input-bg);
     color: var(--text-color);
     font-size: 1rem;
-    margin-right: 0.5rem;
 }
 
 #bid-input:focus {
@@ -99,15 +457,57 @@ header {
 #bid-form button {
     padding: 0.75rem 1.5rem;
     border: none;
-    background-color: var(--primary-color);
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--primary-color), #0099cc);
     color: white;
-    border-radius: 20px;
-    cursor: pointer;
     font-size: 1rem;
-    font-weight: bold;
-    transition: background-color 0.2s;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-#bid-form button:hover {
-    background-color: #0056b3;
+#bid-form button:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(0, 212, 255, 0.4);
+}
+
+#bid-form button:disabled {
+    background: var(--border-color);
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ========== SCROLLBAR STYLING ========== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--input-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+    .auction-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .role-selection {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .role-btn {
+        width: 100%;
+        max-width: 300px;
+    }
 }

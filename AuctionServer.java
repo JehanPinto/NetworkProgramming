@@ -9,10 +9,13 @@ public class AuctionServer {
 
     private static List<ClientHandler> clientHandlers = new CopyOnWriteArrayList<>();
     private static volatile boolean auctionRunning = true;
+    private static Thread timerThread = null;
+    private static AuctionState auctionState;
 
     public static void main(String[] args) {
         try {
-            AuctionState auctionState = new AuctionState("Vintage Painting", 50.0);
+            auctionState = new AuctionState("Vintage Painting", 50.0);
+            // Auction starts in PENDING state, waiting for admin to start
 
             // --- RMI SETUP ---
             try {
@@ -25,27 +28,6 @@ public class AuctionServer {
                 e.printStackTrace();
             }
             // --- END RMI SETUP ---
-
-            // --- AUCTION TIMER THREAD ---
-            Thread timerThread = new Thread(() -> {
-                try {
-                    System.out.println("Auction timer started for 60 seconds.");
-                    Thread.sleep(60 * 1000);
-
-                    if (auctionState.isAuctionOpen()) {
-                        System.out.println("Timer finished. Closing auction.");
-                        auctionState.closeAuction();
-                        String winnerMessage = String.format("!!! AUCTION OVER! Final winner: %s with a bid of $%.2f !!!",
-                                auctionState.getHighestBidder(), auctionState.getCurrentPrice());
-                        broadcast(winnerMessage);
-                        shutdown();
-                    }
-                } catch (InterruptedException e) {
-                    System.out.println("Auction timer interrupted.");
-                }
-            });
-            timerThread.start();
-            // --- END TIMER THREAD ---
 
             // --- MAIN SERVER LOOP TO ACCEPT CLIENTS ---
             try (ServerSocket serverSocket = new ServerSocket(5001)) {
@@ -89,5 +71,48 @@ public class AuctionServer {
         // This is a forceful way to exit, ensuring the server socket closes.
         // A more graceful shutdown might involve interrupting the main thread.
         System.exit(0);
+    }
+
+    public static void startAuction(int durationSeconds) {
+        if (timerThread != null && timerThread.isAlive()) {
+            System.out.println("Auction is already running!");
+            return;
+        }
+
+        auctionState.startAuction();
+        auctionState.setDuration(durationSeconds);
+        
+        System.out.println("Admin started the auction for " + durationSeconds + " seconds.");
+        broadcast("AUCTION_STARTED:" + durationSeconds);
+        
+        // --- AUCTION TIMER THREAD ---
+        timerThread = new Thread(() -> {
+            try {
+                long endTime = System.currentTimeMillis() + (durationSeconds * 1000L);
+                
+                while (System.currentTimeMillis() < endTime && auctionState.isAuctionOpen()) {
+                    long remainingSeconds = (endTime - System.currentTimeMillis()) / 1000;
+                    broadcast("TIMER_UPDATE:" + remainingSeconds);
+                    Thread.sleep(1000);
+                }
+
+                if (auctionState.isAuctionOpen()) {
+                    System.out.println("Timer finished. Closing auction.");
+                    auctionState.closeAuction();
+                    String winnerMessage = String.format("!!! AUCTION OVER! Final winner: %s with a bid of $%.2f !!!",
+                            auctionState.getHighestBidder(), auctionState.getCurrentPrice());
+                    broadcast("AUCTION_ENDED:" + auctionState.getHighestBidder() + ":" + auctionState.getCurrentPrice());
+                    Thread.sleep(3000);
+                    shutdown();
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Auction timer interrupted.");
+            }
+        });
+        timerThread.start();
+    }
+
+    public static AuctionState getAuctionState() {
+        return auctionState;
     }
 }

@@ -35,4 +35,13 @@ public class RemoteAdminImpl extends UnicastRemoteObject implements RemoteAdmin 
         return String.format("Current Item: %s | Current Price: $%.2f | Highest Bidder: %s",
                 auctionState.getCurrentItem(), auctionState.getCurrentPrice(), auctionState.getHighestBidder());
     }
+
+    @Override
+    public String startAuction(int durationSeconds) throws RemoteException {
+        if (auctionState.hasStarted()) {
+            return "Auction has already been started.";
+        }
+        AuctionServer.startAuction(durationSeconds);
+        return "Auction started successfully for " + durationSeconds + " seconds.";
+    }
 }
