@@ -1,32 +1,45 @@
 # Network Programming Auction
 
-A simple multi-client, timed auction system with a remote admin console, built with Java sockets and RMI.
+A multi-client auction system with a TCP-based client, a web-based client, and a remote admin console.
 
 ## How to Run
 
-### 1. Compile
-Open a terminal in the project directory and compile all Java files:
+### 1. Compile All Java Code
+Open a terminal in the project's root directory and run:
 ```bash
 javac *.java
 ```
 
-### 2. Start the Server
-In the same terminal, start the auction server. This will also handle the RMI registry.
+### 2. Start the Backend Services
+You need to start two separate server processes in two separate terminals.
+
+**Terminal 1: Start the Main Auction Server**
 ```bash
 java AuctionServer
 ```
+*This handles the core auction logic and the RMI admin service.*
 
-### 3. Start Clients
-Open new, separate terminals for each client.
+**Terminal 2: Start the WebSocket Bridge**
+```bash
+java WebSocketBridge
+```
+*This allows the web frontend to communicate with the main server.*
 
-**To join as a bidder:**
+### 3. Connect Clients
+You can now connect any combination of the following clients.
+
+**Option A: Connect a Terminal Bidder**
+Open a new terminal and run:
 ```bash
 java AuctionClient
 ```
 
-**To connect as an administrator:**
+**Option B: Connect the Web Frontend**
+Open the `frontend/index.html` file in your web browser.
+
+**Option C: Connect the Admin Console**
+Open a new terminal and run:
 ```bash
 java AdminConsole
 ```
----
-*You can run multiple `AuctionClient` instances to simulate multiple bidders.*
+*Use `status` to check the current bid or `stop` to end the auction.*
