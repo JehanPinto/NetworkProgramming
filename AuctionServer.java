@@ -1,41 +1,73 @@
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AuctionServer {
 
-    private static Set<PrintWriter> clientWriters = new HashSet<>();
+    private static List<ClientHandler> clientHandlers = new CopyOnWriteArrayList<>();
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(5001)) {
             System.out.println("Auction Server started. Waiting for clients...");
             AuctionState auctionState = new AuctionState("Vintage Painting", 50.0);
 
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
-                
-                ClientHandler clientHandler = new ClientHandler(clientSocket, auctionState);
-                new Thread(clientHandler).start();
+            // --- THIS IS THE TIMER THREAD THAT WAS MISSING ---
+            new Thread(() -> {
+                try {
+                    System.out.println("Auction timer started for 60 seconds.");
+                    Thread.sleep(60 * 1000); // 60 seconds
+
+                    System.out.println("Timer finished. Closing auction.");
+                    auctionState.closeAuction();
+                    String winnerMessage = String.format("!!! AUCTION OVER! Final winner: %s with a bid of $%.2f !!!",
+                            auctionState.getHighestBidder(), auctionState.getCurrentPrice());
+                    broadcast(winnerMessage);
+                    shutdown(); // Close all client connections
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    e.printStackTrace();
+                }
+            }).start();
+            // --- END OF TIMER THREAD ---
+
+            while (auctionState.isAuctionOpen()) {
+                try {
+                    Socket clientSocket = serverSocket.accept();
+                    System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
+                    ClientHandler clientHandler = new ClientHandler(clientSocket, auctionState);
+                    clientHandlers.add(clientHandler);
+                    new Thread(clientHandler).start();
+                } catch (Exception e) {
+                    if (!auctionState.isAuctionOpen()) {
+                        System.out.println("Server socket closed, auction is over.");
+                        break;
+                    }
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            System.out.println("Server shutting down.");
         }
     }
 
-    public static synchronized void addClient(PrintWriter writer) {
-        clientWriters.add(writer);
+    public static void removeClient(ClientHandler handler) {
+        clientHandlers.remove(handler);
     }
 
-    public static synchronized void removeClient(PrintWriter writer) {
-        clientWriters.remove(writer);
-    }
-
-    public static synchronized void broadcast(String message) {
-        for (PrintWriter writer : clientWriters) {
-            writer.println(message);
+    public static void broadcast(String message) {
+        for (ClientHandler handler : clientHandlers) {
+            handler.sendMessage(message);
         }
+    }
+
+    public static void shutdown() {
+        for (ClientHandler handler : clientHandlers) {
+            handler.closeConnection();
+        }
+        clientHandlers.clear();
     }
 }
