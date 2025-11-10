@@ -17,7 +17,7 @@ A comprehensive multi-client auction system with role-based access, real-time bi
 
 **Windows PowerShell:**
 ```powershell
-.\start-backend.ps1
+.\start-backend.bat
 ```
 
 This script will:
