@@ -2,19 +2,23 @@
 
 ## Starting the System
 
-### Windows (Choose one):
-```powershell
-# PowerShell
-.\start-backend.ps1
+### Windows:
+```cmd
+# Double-click start-backend.bat in File Explorer
+# OR in PowerShell:
+.\start-backend.bat
 
-# Command Prompt
+# OR in Command Prompt:
 start-backend.bat
 
-# Manual (if scripts don't work)
+# Manual (if script doesn't work)
 # Terminal 1:
+javac -d build backend\*.java
+cd build
 java AuctionServer
 
 # Terminal 2:
+cd build
 java WebSocketBridge
 ```
 

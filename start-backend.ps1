@@ -18,7 +18,7 @@ try {
 # Compile all Java files
 Write-Host ""
 Write-Host "[Step 1/3] Compiling Java files..." -ForegroundColor Yellow
-javac *.java
+javac -d build backend\*.java
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "✗ Compilation failed!" -ForegroundColor Red
@@ -30,7 +30,7 @@ Write-Host "✓ Compilation successful" -ForegroundColor Green
 Write-Host ""
 Write-Host "[Step 2/3] Starting Auction Server on port 5001..." -ForegroundColor Yellow
 Start-Process powershell -ArgumentList "-NoExit", "-Command", `
-    "Write-Host 'AUCTION SERVER' -ForegroundColor Cyan; java AuctionServer"
+    "Write-Host 'AUCTION SERVER' -ForegroundColor Cyan; Set-Location build; java AuctionServer"
 Start-Sleep -Seconds 2
 Write-Host "✓ Auction Server started" -ForegroundColor Green
 
@@ -38,7 +38,7 @@ Write-Host "✓ Auction Server started" -ForegroundColor Green
 Write-Host ""
 Write-Host "[Step 3/3] Starting WebSocket Bridge on port 8080..." -ForegroundColor Yellow
 Start-Process powershell -ArgumentList "-NoExit", "-Command", `
-    "Write-Host 'WEBSOCKET BRIDGE' -ForegroundColor Magenta; java WebSocketBridge"
+    "Write-Host 'WEBSOCKET BRIDGE' -ForegroundColor Magenta; Set-Location build; java WebSocketBridge"
 Start-Sleep -Seconds 1
 Write-Host "✓ WebSocket Bridge started" -ForegroundColor Green
 

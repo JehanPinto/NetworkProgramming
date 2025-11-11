@@ -17,7 +17,7 @@ echo [OK] Java found
 
 echo.
 echo [Step 1/3] Compiling Java files...
-javac *.java
+javac -d build backend\*.java
 if errorlevel 1 (
     echo [ERROR] Compilation failed!
     pause
@@ -27,13 +27,13 @@ echo [OK] Compilation successful
 
 echo.
 echo [Step 2/3] Starting Auction Server on port 5001...
-start "Auction Server" cmd /k "echo AUCTION SERVER & java AuctionServer"
+start "Auction Server" cmd /k "echo AUCTION SERVER & cd build & java AuctionServer"
 timeout /t 2 /nobreak >nul
 echo [OK] Auction Server started
 
 echo.
 echo [Step 3/3] Starting WebSocket Bridge on port 8080...
-start "WebSocket Bridge" cmd /k "echo WEBSOCKET BRIDGE & java WebSocketBridge"
+start "WebSocket Bridge" cmd /k "echo WEBSOCKET BRIDGE & cd build & java WebSocketBridge"
 timeout /t 1 /nobreak >nul
 echo [OK] WebSocket Bridge started
 

@@ -8,20 +8,39 @@ A comprehensive multi-client auction system with role-based access, real-time bi
 👨‍💼 **Admin Dashboard** - Control auction timing, monitor bids in real-time  
 👤 **User Bidding** - Live timer, bid tracking, and instant updates  
 🔒 **Secure Admin Access** - Password-protected admin functionality  
-⏱️ **Custom Timer** - Admin can set auction duration  
+⏱️ **Custom Timer** - Admin can set auction duration and starting price  
 📊 **Real-time Updates** - WebSocket communication for instant notifications  
+
+## Project Structure
+
+```
+NetworkProgramming/
+├── backend/              # Java source files
+├── build/                # Compiled class files
+├── frontend/             # Web interface
+│   ├── index.html
+│   ├── script.js
+│   └── style.css
+└── start-backend.bat     # Startup script (works in CMD & PowerShell)
+```
 
 ## Quick Start
 
 ### Option 1: Single Command (Recommended)
 
-**Windows PowerShell:**
-```powershell
+**Method A: Double-click** `start-backend.bat` file in File Explorer
+
+**Method B: Run in terminal:**
+```cmd
+# In PowerShell:
 .\start-backend.bat
+
+# In Command Prompt:
+start-backend.bat
 ```
 
 This script will:
-1. Compile all Java files
+1. Compile all Java files from `backend/` to `build/`
 2. Start the Auction Server (port 5001)
 3. Start the WebSocket Bridge (port 8080)
 4. Display the running status
@@ -30,18 +49,20 @@ This script will:
 
 **Step 1: Compile All Java Code**
 ```bash
-javac *.java
+javac -d build backend\*.java
 ```
 
 **Step 2: Start Backend Services**
 
 Terminal 1 - Auction Server:
 ```bash
+cd build
 java AuctionServer
 ```
 
 Terminal 2 - WebSocket Bridge:
 ```bash
+cd build
 java WebSocketBridge
 ```
 
