@@ -169,7 +169,5 @@ Commands: `status`, `stop`
 
 For more detailed information, see:
 - **[QUICKSTART.md](QUICKSTART.md)** - Quick reference guide with tips and troubleshooting
-- **[PROJECT_COMPLETION.md](PROJECT_COMPLETION.md)** - Complete feature list and testing checklist
-- **[IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md)** - Technical implementation details
 - **[SYSTEM_FLOW.md](SYSTEM_FLOW.md)** - System architecture and flow diagrams
-- **[UI_DOCUMENTATION.md](UI_DOCUMENTATION.md)** - UI design specifications and screenshots
+
