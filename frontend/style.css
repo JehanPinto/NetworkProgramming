@@ -1,14 +1,14 @@
 :root {
-    --background-color: #0f0f23;
-    --text-color: #e0e0e0;
-    --primary-color: #00d4ff;
-    --secondary-color: #ff6b6b;
-    --success-color: #51cf66;
-    --warning-color: #ffd43b;
-    --container-bg: #1a1a2e;
-    --input-bg: #16213e;
-    --border-color: #2e3a52;
-    --card-bg: #0f3460;
+    --background-color: #f8f9fa;
+    --text-color: #2d3748;
+    --primary-color: #4a90e2;
+    --secondary-color: #e85d75;
+    --success-color: #48bb78;
+    --warning-color: #ed8936;
+    --container-bg: #ffffff;
+    --input-bg: #f7fafc;
+    --border-color: #e2e8f0;
+    --card-bg: #f8fafc;
 }
 
 * {
@@ -19,7 +19,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    background: linear-gradient(135deg, #f0f4f8 0%, #e6eef5 100%);
     color: var(--text-color);
     display: flex;
     justify-content: center;
@@ -33,7 +33,7 @@ body {
     max-width: 900px;
     background-color: var(--container-bg);
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     overflow: hidden;
 }
 
@@ -44,18 +44,15 @@ body {
 /* ========== HEADER ========== */
 header {
     padding: 1.5rem;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     text-align: center;
-    background: linear-gradient(135deg, var(--card-bg) 0%, var(--container-bg) 100%);
+    background: var(--container-bg);
 }
 
 header h1 {
     margin-bottom: 0.5rem;
     font-size: 2rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary-color);
 }
 
 /* ========== LOGIN SCREEN ========== */
@@ -93,9 +90,10 @@ header h1 {
 }
 
 .role-btn:hover {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
     border-color: var(--primary-color);
-    box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.15);
+    background: #ffffff;
 }
 
 .role-icon {
@@ -110,7 +108,7 @@ header h1 {
 #admin-login-form h2 {
     text-align: center;
     margin-bottom: 1.5rem;
-    color: var(--primary-color);
+    color: var(--text-color);
 }
 
 #admin-login-form input {
@@ -133,31 +131,34 @@ header h1 {
     width: 100%;
     padding: 0.75rem;
     margin-top: 0.5rem;
-    background: linear-gradient(135deg, var(--primary-color), #0099cc);
+    background: var(--primary-color);
     border: none;
     border-radius: 8px;
     color: #fff;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.2s;
 }
 
 #admin-login-form button:hover {
-    transform: scale(1.02);
+    background: #3a7bc8;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.25);
 }
 
 #admin-login-form button[type="button"] {
     background: var(--input-bg);
     border: 1px solid var(--border-color);
+    color: var(--text-color);
 }
 
 .error-message {
-    color: var(--secondary-color);
+    color: #c53030;
     text-align: center;
     padding: 0.5rem;
     margin-bottom: 1rem;
-    background-color: rgba(255, 107, 107, 0.1);
+    background-color: #fff5f5;
+    border: 1px solid #feb2b2;
     border-radius: 8px;
 }
 
@@ -177,7 +178,7 @@ header h1 {
 }
 
 .control-panel h2 {
-    color: var(--primary-color);
+    color: var(--text-color);
     margin-bottom: 1rem;
     font-size: 1.3rem;
 }
@@ -211,23 +212,23 @@ header h1 {
 .timer-setup button,
 #start-auction-btn {
     padding: 0.5rem 1.5rem;
-    background: linear-gradient(135deg, var(--success-color), #37b24d);
+    background: var(--success-color);
     border: none;
     border-radius: 8px;
     color: #fff;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.2s;
 }
 
 .timer-setup button:hover {
-    transform: scale(1.05);
+    background: #38a169;
+    box-shadow: 0 2px 8px rgba(72, 187, 120, 0.25);
 }
 
 .timer-setup button:disabled {
-    background: var(--border-color);
+    background: #cbd5e0;
     cursor: not-allowed;
-    transform: none;
 }
 
 .timer {
@@ -240,7 +241,7 @@ header h1 {
 
 .timer-label {
     font-size: 0.9rem;
-    color: #aaa;
+    color: #718096;
 }
 
 .timer-value {
@@ -261,7 +262,7 @@ header h1 {
 
 .bid-details h2,
 .bid-history h2 {
-    color: var(--primary-color);
+    color: var(--text-color);
     margin-bottom: 1rem;
     font-size: 1.3rem;
 }
@@ -282,7 +283,7 @@ header h1 {
 .status-label {
     display: block;
     font-size: 0.85rem;
-    color: #aaa;
+    color: #718096;
     margin-bottom: 0.5rem;
 }
 
@@ -304,11 +305,12 @@ header h1 {
 }
 
 .user-badge {
-    background: linear-gradient(135deg, var(--primary-color), #0099cc);
+    background: var(--primary-color);
     padding: 0.4rem 1rem;
     border-radius: 20px;
     font-weight: 600;
     font-size: 0.9rem;
+    color: #fff;
 }
 
 #connection-status {
@@ -341,7 +343,7 @@ header h1 {
 
 .info-label {
     font-size: 0.85rem;
-    color: #aaa;
+    color: #718096;
     margin-bottom: 0.5rem;
 }
 
@@ -361,7 +363,7 @@ header h1 {
 }
 
 #bid-history h3 {
-    color: var(--primary-color);
+    color: var(--text-color);
     margin-bottom: 1rem;
 }
 
@@ -389,7 +391,7 @@ header h1 {
 
 .bid-item.own-bid {
     border-left-color: var(--success-color);
-    background-color: rgba(81, 207, 102, 0.1);
+    background-color: #f0fff4;
 }
 
 .bid-user {
@@ -405,7 +407,7 @@ header h1 {
 
 .bid-time {
     font-size: 0.8rem;
-    color: #888;
+    color: #a0aec0;
 }
 
 .system-message {
@@ -417,18 +419,20 @@ header h1 {
 }
 
 .system-message.info {
-    background-color: rgba(0, 212, 255, 0.1);
-    color: var(--primary-color);
+    background-color: #ebf8ff;
+    color: #2c5282;
+    border: 1px solid #bee3f8;
 }
 
 .system-message.error {
-    background-color: rgba(255, 107, 107, 0.1);
-    color: var(--secondary-color);
+    background-color: #fff5f5;
+    color: #c53030;
+    border: 1px solid #feb2b2;
 }
 
 .no-bids {
     text-align: center;
-    color: #888;
+    color: #a0aec0;
     padding: 2rem;
 }
 
@@ -458,23 +462,22 @@ header h1 {
     padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 8px;
-    background: linear-gradient(135deg, var(--primary-color), #0099cc);
+    background: var(--primary-color);
     color: white;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 #bid-form button:hover:not(:disabled) {
-    transform: scale(1.05);
-    box-shadow: 0 4px 16px rgba(0, 212, 255, 0.4);
+    background: #3a7bc8;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.25);
 }
 
 #bid-form button:disabled {
-    background: var(--border-color);
+    background: #cbd5e0;
     cursor: not-allowed;
-    transform: none;
 }
 
 /* ========== SCROLLBAR STYLING ========== */
@@ -487,12 +490,12 @@ header h1 {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--border-color);
+    background: #cbd5e0;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-color);
+    background: #a0aec0;
 }
 
 /* ========== RESPONSIVE DESIGN ========== */
